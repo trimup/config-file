@@ -1,0 +1,32 @@
+#debug: true
+
+# PROFILES  短信接口
+## dev | prod | trds
+spring:
+  application:
+     name: sms-service
+server:
+  port: 8040
+YR_USER_NAME : BC1lihe
+YR_PASSWORD : Lihe1688
+CL_USER_NAME : BC1lihe
+CL_PASSWORD : Lihe1688
+# 云容url
+YR_PATH: http://116.58.219.245/MessageTransferWebApp30/servlet/messageTransferServiceServlet
+# 创蓝 url
+CL_PATH: http://222.73.117.156/msg/
+---
+spring:
+  profiles: test
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---
+spring:
+  profiles: prod
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---

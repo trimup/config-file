@@ -1,0 +1,7 @@
+spring:
+  application:
+     name: configserver
+info:
+  component: configServer
+server:
+  port: 8000

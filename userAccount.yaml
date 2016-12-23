@@ -1,0 +1,48 @@
+#debug: true
+
+# PROFILES  注册接口
+## dev | prod | trds
+spring:
+  application:
+     name: userAccount-service
+server:
+  port: 8030
+VERIFY_SMS_MODLE : 亲爱的用户，您好!您的注册验证码是%s 为了您的账户安全，请勿将验证码转发他人！,亲爱的已注册用户，您好!您的验证码是:%s 为了您的账户安全，请勿将验证码转发他人！(有效期30分钟),亲爱的已注册用户，您好!您的验证码是:%s 为了您的账户安全，请勿将验证码转发他人！(有效期30分钟)
+SMS_SALT : 0o
+SMS_MAX : 5
+allowed-origins:
+---
+spring:
+  profiles: test
+
+
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:mysql://192.168.1.215:3306/lihe?zeroDateTimeBehavior=convertToNull
+
+# Username and password
+  username :  apidba
+  password :  XFcaPhvbc=6m
+
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+allowed-origins:
+---
+spring:
+  profiles: prod
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:mysql://10.168.234.100:3306/lihe?zeroDateTimeBehavior=convertToNull
+
+# Username and password
+  username :  apidba
+  password :  saMewAY1991@*&1
+
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+allowed-origins:
+---

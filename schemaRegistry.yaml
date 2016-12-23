@@ -1,0 +1,24 @@
+#debug: true
+
+# PROFILES  模版注册接口
+## dev | prod | trds
+spring:
+  application:
+     name: schemaRegistry-service
+server:
+  port: 8100
+---
+spring:
+  profiles: test
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---
+spring:
+  profiles: prod
+logging:
+  level:
+    path:  /opt/logs/lihe
+                                                                        file:  ${spring.application.name}/${spring.application.name}.log
+---

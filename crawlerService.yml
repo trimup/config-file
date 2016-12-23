@@ -1,0 +1,9 @@
+spring:
+  application:
+     name: crawler-service
+server:
+  port: 8080
+
+crawler_tmp_path: target/tmp
+#fund_codes: 002425,210006,210012,210013
+fund_codes: 210012

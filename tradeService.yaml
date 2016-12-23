@@ -1,0 +1,44 @@
+#debug: true
+
+# PROFILES  注册接口
+## dev | prod | trds
+spring:
+  application:
+     name: trade-service
+server:
+  port: 8070
+info:
+  component: ${spring.application.name}
+---
+spring:
+  profiles: test
+
+
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:mysql://192.168.1.215:3306/lihe?zeroDateTimeBehavior=convertToNull
+
+# Username and password
+  username :  apidba
+  password :  XFcaPhvbc=6m
+
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---
+spring:
+  profiles: prod
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:mysql://10.168.234.100:3306/lihe?zeroDateTimeBehavior=convertToNull
+
+# Username and password
+  username :  samewayjava
+  password :  saMewAY1991@*&1
+
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---

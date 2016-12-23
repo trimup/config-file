@@ -1,0 +1,105 @@
+# Discovery Server Access
+server:
+  servletPath: /edge
+#  ssl:
+#    key-store: classpath:server.jks
+#    key-store-password: password
+#    key-password: password
+allow-non-standard-wrappers: true
+management.add-application-context-header: false
+#management.contextPath: /admin
+info:
+  component: Web Edge Server
+# Spring properties
+## dev | prod | test
+spring:
+#  data.rest.baseUri: /rest
+  jpa:
+    hibernate:
+#      ddl-auto: validate
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    database: H2
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  freemarker:
+    enabled: false
+    cache: false
+  mvc.favicon.enabled: false
+#endpoints:
+#  restart:
+#    enabled: false
+#  shutdown:
+#    enabled: false
+#  health:
+#    sensitive: false
+
+#security:
+#  basic:
+#    enabled: false
+#token.secret: Y29tLmR0LmV4YW0=
+#token.expiration: 86400 # 一小时
+#token.header: X-AUTH-TOKEN
+
+zuul:
+  servlet-path: /
+#  route.home: /**
+  ignoredServices: '*'
+#  ignoredPatterns: /admin/**
+  retryable: true
+  routes:
+    useraccount-api:
+       path:  /**/userAccount/**
+       serviceId: userAccount-service
+    hundsuninterface-api:
+        path:  /**/hundSunInterface/**
+        serviceId: hundSunInterface-service
+    smssrvice-api:
+        path:  /**/smsService/**
+        serviceId: sms-service
+    interactive-api:
+        path:  /**/interactive/**
+        serviceId: interactive-service
+    product-api:
+        path:  /**/product/**
+        serviceId: product-service
+    trade-api:
+            path:  /**/trade/**
+            serviceId: trade-service
+---
+spring:
+  profiles: test
+
+#eureka:
+#  client:
+#  # Discovery Server Access
+#    serviceUrl:
+#      defaultZone: http://root:lihefund@192.168.1.231:8010/eureka/
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---
+spring:
+  profiles: prod
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+#eureka:
+#  client:
+                                  #  # Discovery Server Access
+                                  #    serviceUrl:
+                                  #      defaultZone: http://root:lihefund@localhost:8010/eureka/
+                                  #  instance:
+                                  #    leaseRenewalIntervalInSeconds: 30
+                                  #zuul:
+                                  ##  route.home: /**
+                                  #  ignoredServices: '*'
+                                  ##  ignoredPatterns: /error
+                                  #  retryable: true
+                                  #  routes:
+                                  #    legacy:
+                                  #       path: /**
+                                  #       url: http://rest.51qed.com

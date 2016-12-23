@@ -1,0 +1,40 @@
+#debug: true
+
+# PROFILES  注册接口
+## dev | prod | trds
+spring:
+  application:
+     name: interactive-service
+server:
+  port: 8050
+allowed-origins:
+URL_HS_PAPERINFO_QUERY: http://{0}/openapi/fundbusrestful/account/paperinfoquery
+URL_HS_SUBMIT_PAPER: http://{0}/openapi/fundbusrestful/account/submitpaperinfo
+---
+spring:
+  profiles: test
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:mysql://192.168.1.215:3306/lihe?zeroDateTimeBehavior=convertToNull
+# Username and password
+  username :  apidba
+  password :  XFcaPhvbc=6m
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+allowed-origins:
+---
+spring:
+  profiles: prod
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:mysql://10.168.234.100:3306/lihe?zeroDateTimeBehavior=convertToNull
+# Username and password
+  username :  apidba
+  password :  saMewAY1991@*&1
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+allowed-origins:

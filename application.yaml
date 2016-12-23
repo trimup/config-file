@@ -1,0 +1,164 @@
+#debug: true
+
+# PROFILES  项目接口
+## dev | prod | trds
+spring:
+  main.show_banner: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+# HTTP encoding (HttpEncodingProperties)
+  http.encoding.charset: UTF-8 # the encoding of HTTP requests/responses
+  http.encoding.enabled: true # enable http encoding support
+  http.encoding.force: true # force the configured encoding
+  freemarker.cache: false
+  cloud:
+     stream:
+       kafka:
+         binder:
+           zk-nodes: 192.168.1.213:2181
+           brokers: 192.168.1.213:9092
+logging:
+  level:
+   ROOT: INFO
+   org.springframework.web: DEBUG
+   org.hibernate.SQL: WARN
+   com.netflix.discovery: ERROR
+   org.springframework.cloud: INFO
+   org.springframework.cloud.stream: INFO
+   com.netflix.zuul: DEBUG
+#  path:  /var/log
+   path:  /log/${spring.application.name}/
+   file:  ${spring.application.name}.log
+
+endpoints:
+  enabled: false
+  sensitive: true
+  info.enabled: true
+  logfile.enabled: true
+  health.enabled: true
+  restart.enabled: true
+  refresh.enabled: true
+  cors.allowed-methods: GET
+
+
+ribbon:
+  ConnectTimeout: 300
+  ReadTimeout: 30000
+# Max number of retries on the same server (excluding the first try)
+  MaxAutoRetries: 3
+# Max number of next servers to retry (excluding the first server)
+  MaxAutoRetriesNextServer: 2
+
+service:
+  defaultMinMs: 0
+  defaultMaxMs: 0
+
+eureka:
+  client:
+    cache-refresh-executor-thread-pool-size: 5
+    heartbeat-executor-thread-pool-size : 10
+    registerWithEureka: true
+    fetchRegistry: true
+    # Default values comes from org.springframework.cloud.netflix.eurek.EurekaClientConfigBean
+    registryFetchIntervalSeconds: 15
+    instanceInfoReplicationIntervalSeconds: 5
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    # Discovery Server Access
+    serviceUrl:
+      defaultZone: http://root:lihefund@localhost:8010/eureka/
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 100000
+info:
+  component: ${spring.application.name}
+
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:log4jdbc:mysql://192.168.1.215:3306/lihe?zeroDateTimeBehavior=convertToNull
+
+# Username and password
+  username :  apidba
+  password :  XFcaPhvbc=6m
+
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+  name:  lihefund # name of the data source
+
+  separator: ; # statement separator in SQL initialization scripts
+
+  max-active: 100 # Advanced configuration...
+  max-idle: 8
+  min-idle: 0
+  initial-size: 1
+  timeBetweenEvictionRunsMillis: 34000
+  minEvictableIdleTimeMillis: 55000
+  validationQuery: SELECT 1
+  validationInterval: 34
+  testOnBorrow: true
+  removeAbandoned: true
+  removeAbandonedTimeout: 233
+
+  test-on-borrow: false
+  test-on-return: false
+  jmx-enabled: false # Export JMX MBeans (if supported)
+
+#Swagger
+EXPORT_PATHS:
+IP_PORT: 192.168.2.21:8080
+DES_KEY: qwertyui
+URL_HS_REDEEM: http://{0}/openapi/fundbusrestful/trade/redeem           # 赎回
+URL_HS_PURCHASEAPPLY: http://{0}/openapi/fundbusrestful/trade/purchaseapply   #申购
+URL_HS_SUBSCRIBEAPPLY: http://{0}/openapi/fundbusrestful/trade/subscribeapply  # 认购
+URL_HS_TRADEAPPLYQUERY: http://{0}/openapi/fundbusrestful/query/tradeapplyquery   #交易申请查询
+URL_HS_TRADERESULTQUERY: http://{0}/openapi/fundbusrestful/query/traderesultquery  # 交易结果查询
+URL_HS_FLOATING_PROFIT_QUERY: http://{0}/openapi/fundbusrestful/query/floatingprofitquery  #浮动收益查询
+URL_HS_MODIFY_BONUS: http://{0}/openapi/fundbusrestful/trade/modifybonus  #修改用户分红方式
+URL_HS_BONUSLIST_QUERY: http://{0}/openapi/fundbusrestful/trade/bonuslistquery  #修改用户分红方式列表查询
+URL_HS_SHARE_QUERY: http://{0}/openapi/fundbusrestful/query/sharequery  #份额查询
+URL_HS_TRADECONFIRMQUERY: http://{0}/openapi/fundbusrestful/query/tradeconfirmquery #交易确认查询
+URL_HS_TRANSACTION_FEECAL_QUERY: http://{0}/openapi/fundbusrestful/trade/transactionfeecalquery #计算手续费
+TEST_BUS: 3
+---
+spring:
+  profiles: test
+  cloud:
+    stream:
+       kafka:
+         binder:
+           zk-nodes: 192.168.1.213:2181
+           brokers: 192.168.1.213:9092
+
+# Connection url for the database "51qed"
+spring.datasource:
+  url:  jdbc:log4jdbc:mysql://192.168.1.215:3306/lihe?zeroDateTimeBehavior=convertToNull
+
+# Username and password
+  username :  apidba
+  password :  XFcaPhvbc=6m
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+---
+spring:
+  profiles: prod
+  cloud:
+      stream:
+         kafka:
+           binder:
+             zk-nodes: localhost:2181
+             brokers: localhost:9092
+  datasource:
+      url:  jdbc:mysql://10.168.234.100:3306/lihe?zeroDateTimeBehavior=convertToNull
+      #Username and password
+      username :  samewayjava
+      password :  saMewAY1991@*&1
+logging:
+  level:
+    path:  /opt/logs/lihe
+    file:  ${spring.application.name}/${spring.application.name}.log
+EXPORT_PATHS: /
